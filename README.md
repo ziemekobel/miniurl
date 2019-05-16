@@ -32,18 +32,15 @@ In order to start the server run ``mvn spring-boot:run``
 
 ```bash
 $ mvn spring-boot:run
-...
-2019-01-23 15:50:50.705  INFO 4625 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5000 (http) with context path ''
-2019-01-23 15:50:50.709  INFO 4625 --- [           main] com.ef.shorturl.ShorturlApplication      : Started ShorturlApplication in 4.281 seconds (JVM running for 6.804)
 ```
 
 To stop it press *Cmd+C* | *Ctrl+C*
 
 ## Features
 
-1. Convert a URL to a short URL of up to 23 characters.
+1. Convert a URL to a mini URL of up to 23 characters.
 
-  * Given only the original URL, generate a random short URL 
+  * Given only the original URL, generate a random mini URL 
 ```json
 $ curl -H "Authorization: Basic amltbXk6c2VjcmV0" -H "Content-Type: application/json" \
      --data '{"url": "http://example.com"}' -X POST http://localhost:5000/
@@ -55,10 +52,10 @@ $ curl -H "Authorization: Basic amltbXk6c2VjcmV0" -H "Content-Type: application/
   "miniurl": "http://localhost:5000/1"
 }
 ```
-* Given both the original URL and the desired short URL, create the desired short URL or give the user an error if that is not possible (ie. it was already taken)
+* Given both the original URL and the desired mini URL, create the desired mini URL or give the user an error if that is not possible (ie. it was already taken)
 ```json
 $ curl -H "Authorization: Basic amltbXk6c2VjcmV0" -H "Content-Type: application/json" \
-     --data '{"url": "http://example.com", "shorturl": "foobar"}' \
+     --data '{"url": "http://example.com", "miniurl": "foobar"}' \
      http://localhost:5000/
 ```
 
@@ -80,7 +77,7 @@ $ curl -H "Authorization: Basic amltbXk6c2VjcmV0" -H "Content-Type: application/
   "error": "Could not create new link. One with the given `miniurl` already exists"
 }
 ```
-2. Retrieve the original URL, given a short URL
+2. Retrieve the original URL, given a mini URL
 ```json
 $ curl -v -H "Content-Type: application/json" \
      http://localhost:5000/foobar/redirect
@@ -97,13 +94,13 @@ $ curl -v -H "Content-Type: application/json" \
 < Location: http://example.com
 ```
 
-3. Retrieve information about an existing short URL created by the user, including:
+3. Retrieve information about an existing mini URL created by the user, including:
 
 * what is the original URL
 
-* when the shortening happened
+* when the minification happened
 
-* how many times the short URL has been accessed
+* how many times the mini URL has been accessed
 ```json
 $ curl -H "Authorization: Basic amltbXk6c2VjcmV0" -H "Content-Type: application/json" \
      http://localhost:5000/foobar
